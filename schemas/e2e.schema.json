@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "e2e.schema.json",
   "title": "E2EArtifact",
-  "description": "Output of step 3. The Kline step reads this file and the site config. Each test entry carries the scenario so conversion does not parse TypeScript.",
+  "description": "Playwright generation record. origin criteria is the planning placeholder rendered from acceptance criteria. origin replay-cache is the production export: specs mirrored from tests/nl using .e2e/cache after a green run-nl. The Kline step reads this file. Each test entry carries the scenario so conversion does not parse TypeScript.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "step", "generatedAt", "dryRun", "sourceArtifact", "target", "run", "tests"],
@@ -11,6 +11,14 @@
     "step": { "const": "e2e" },
     "generatedAt": { "type": "string" },
     "dryRun": { "type": "boolean" },
+    "origin": {
+      "enum": ["criteria", "replay-cache"],
+      "description": "criteria: planning placeholder. replay-cache: generated from .e2e/cache after a green NL run."
+    },
+    "cacheDir": {
+      "type": "string",
+      "description": "Replay cache directory used when origin is replay-cache."
+    },
     "sourceArtifact": { "type": "string" },
     "target": {
       "type": "object",
@@ -56,10 +64,17 @@
       "required": ["id", "criteriaId", "title", "file", "status", "scenario"],
       "properties": {
         "id": { "type": "string" },
-        "criteriaId": { "type": "string" },
+        "criteriaId": {
+          "type": "string",
+          "description": "Acceptance-criterion id for origin criteria. For replay-cache, <nl file>#<test title>."
+        },
         "title": { "type": "string" },
         "file": { "type": "string", "description": "Playwright spec path, relative to the repo when it lives inside it." },
         "status": { "enum": ["passed", "pending", "failed"] },
+        "nlFile": {
+          "type": "string",
+          "description": "Human-maintained NL source. Present when origin is replay-cache."
+        },
         "scenario": {
           "type": "object",
           "additionalProperties": false,

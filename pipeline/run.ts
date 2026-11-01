@@ -1,7 +1,9 @@
 import { runCriteria } from "./steps/criteria";
 import { runE2E } from "./steps/e2e";
+import { runExportPw } from "./steps/export-pw";
 import { runExplore } from "./steps/explore";
 import { runKline } from "./steps/kline";
+import { runNl } from "./steps/run-nl";
 import type { PipelineOptions, StepName } from "./types";
 
 export async function runStep(step: StepName, options: PipelineOptions): Promise<void> {
@@ -14,6 +16,12 @@ export async function runStep(step: StepName, options: PipelineOptions): Promise
       return;
     case "e2e":
       await runE2E(options);
+      return;
+    case "run-nl":
+      await runNl(options);
+      return;
+    case "export-pw":
+      await runExportPw(options);
       return;
     case "kline":
       await runKline(options);

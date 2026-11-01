@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run-nl.schema.json",
+  "title": "RunNlArtifact",
+  "description": "Outcome of executing human-maintained tests/nl. export-pw generates Playwright from .e2e/cache only when status is green.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "step", "generatedAt", "dryRun", "status", "runner", "cacheDir", "files", "note"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "step": { "const": "run-nl" },
+    "generatedAt": { "type": "string" },
+    "dryRun": { "type": "boolean" },
+    "status": { "enum": ["green", "pending", "failed"] },
+    "runner": { "type": "string" },
+    "cacheDir": { "type": "string", "description": "Directory where a live e2e run settles trace-1 entries." },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "NL files selected for the run."
+    },
+    "note": { "type": "string" }
+  }
+}

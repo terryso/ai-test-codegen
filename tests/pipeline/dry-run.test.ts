@@ -35,6 +35,7 @@ test("dry-run pipeline writes the four artifacts and a Kline case", async () => 
     assert.equal(criteria.criteria[0].sourceFlowId, "flow-home-visible");
 
     assert.equal(e2e.step, "e2e");
+    assert.equal(e2e.origin, "criteria");
     assert.equal(e2e.run.status, "green");
     assert.equal(e2e.run.runner, "dry-run");
     assert.equal(e2e.tests[0].status, "passed");
