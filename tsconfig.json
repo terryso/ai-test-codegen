@@ -17,6 +17,7 @@
     "pipeline/**/*.ts",
     "scripts/**/*.ts",
     "tests/**/*.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "e2e.config.ts"
   ]
 }

@@ -14,9 +14,12 @@ import {
 } from "../types";
 
 /**
- * Generate Playwright specs from criteria and record a run.
- * Dry-run marks the run green without launching a browser.
- * The live path writes the specs and leaves the run pending until an agent loop exists.
+ * Planning placeholder: render Playwright from acceptance criteria.
+ *
+ * Production specs for human-maintained NL tests come from `runExportPw`,
+ * which reads `.e2e/cache` after a green `run-nl`. This function is not that path.
+ * Dry-run marks the placeholder run green without launching a browser.
+ * The live path writes the placeholder specs and leaves the run pending.
  */
 export async function runE2E(options: PipelineOptions): Promise<E2EArtifact> {
   const site = await loadSite(options.configPath);
@@ -65,6 +68,7 @@ export async function runE2E(options: PipelineOptions): Promise<E2EArtifact> {
     step: "e2e",
     generatedAt: new Date().toISOString(),
     dryRun: options.dryRun,
+    origin: "criteria",
     sourceArtifact: displayPath(sourcePath),
     target: { name: site.config.name, baseUrl: site.config.baseUrl },
     run,

@@ -6,7 +6,7 @@ Kline is the durable test sink for this repository. A case is a runner-agnostic 
 
 - the public target (`name`, `baseUrl`)
 - the source criterion id and E2E spec path
-- which runner marked the E2E test passed (`verifiedBy`)
+- which runner marked the E2E test passed (`verifiedBy`: `dry-run` for the planning placeholder, `replay-cache` when the scenario was projected from a green NL recording)
 - ordered steps (`goto`, `click`, `fill`, `assertVisible`, `assertText`, `assertUrl`)
 
 Commit the cases you want to keep. Dry-run cases are placeholders (`verifiedBy` is `dry-run`) and are not evidence that a browser passed.
