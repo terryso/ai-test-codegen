@@ -1,0 +1,26 @@
+{
+  "name": "ai-test-codegen",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Four-step pipeline that explores a website, writes acceptance criteria, generates Playwright E2E tests, and stores green runs as Kline.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "explore": "tsx scripts/pipeline.ts explore",
+    "criteria": "tsx scripts/pipeline.ts criteria",
+    "e2e": "tsx scripts/pipeline.ts e2e",
+    "kline": "tsx scripts/pipeline.ts kline",
+    "pipeline": "tsx scripts/pipeline.ts all",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/pipeline/dry-run.test.ts",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.19.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

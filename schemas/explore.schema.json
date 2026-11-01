@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "explore.schema.json",
+  "title": "ExploreArtifact",
+  "description": "Output of step 1. Input to the criteria step, together with the site config.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "step", "generatedAt", "dryRun", "target", "pages", "flows", "authSurface", "notes"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "step": { "const": "explore" },
+    "generatedAt": { "type": "string" },
+    "dryRun": { "type": "boolean" },
+    "target": { "$ref": "#/$defs/target" },
+    "pages": { "type": "array", "items": { "$ref": "#/$defs/page" } },
+    "flows": { "type": "array", "items": { "$ref": "#/$defs/flow" } },
+    "authSurface": { "$ref": "#/$defs/authSurface" },
+    "notes": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "baseUrl"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "baseUrl": { "type": "string", "minLength": 1 }
+      }
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "selector", "role"],
+      "properties": {
+        "name": { "type": "string" },
+        "selector": { "type": "string" },
+        "role": { "type": ["string", "null"] }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "path", "title", "selectors"],
+      "properties": {
+        "id": { "type": "string" },
+        "url": { "type": "string" },
+        "path": { "type": "string" },
+        "title": { "type": "string" },
+        "selectors": { "type": "array", "items": { "$ref": "#/$defs/selector" } }
+      }
+    },
+    "actionStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "target", "value"],
+      "properties": {
+        "action": {
+          "enum": ["goto", "click", "fill", "assertVisible", "assertText", "assertUrl"]
+        },
+        "target": { "type": "string" },
+        "value": { "type": ["string", "null"] }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "entryUrl", "steps"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "entryUrl": { "type": "string" },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/actionStep" } }
+      }
+    },
+    "authField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "selector"],
+      "properties": {
+        "name": { "type": "string" },
+        "selector": { "type": "string" }
+      }
+    },
+    "authSurface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiresAuth", "loginUrl", "fields", "credentialsConfigured"],
+      "properties": {
+        "requiresAuth": { "type": "boolean" },
+        "loginUrl": { "type": ["string", "null"] },
+        "fields": { "type": "array", "items": { "$ref": "#/$defs/authField" } },
+        "credentialsConfigured": {
+          "type": "boolean",
+          "description": "True when AUTH_USERNAME and AUTH_PASSWORD are both set. The values themselves are never stored."
+        }
+      }
+    }
+  }
+}

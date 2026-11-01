@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "criteria.schema.json",
+  "title": "CriteriaArtifact",
+  "description": "Output of step 2. Input to the E2E step, together with the site config.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "step", "generatedAt", "dryRun", "sourceArtifact", "target", "criteria"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "step": { "const": "criteria" },
+    "generatedAt": { "type": "string" },
+    "dryRun": { "type": "boolean" },
+    "sourceArtifact": { "type": "string", "description": "Path to the explore artifact this file was derived from." },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "baseUrl"],
+      "properties": {
+        "name": { "type": "string" },
+        "baseUrl": { "type": "string" }
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/criterion" }
+    }
+  },
+  "$defs": {
+    "actionStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "target", "value"],
+      "properties": {
+        "action": {
+          "enum": ["goto", "click", "fill", "assertVisible", "assertText", "assertUrl"]
+        },
+        "target": { "type": "string" },
+        "value": { "type": ["string", "null"] }
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "target", "expected"],
+      "properties": {
+        "type": { "enum": ["visible", "text", "url"] },
+        "target": { "type": "string" },
+        "expected": { "type": "string" }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "sourceFlowId", "priority", "preconditions", "steps", "assertions"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "sourceFlowId": { "type": "string" },
+        "priority": { "enum": ["must", "should", "may"] },
+        "preconditions": { "type": "array", "items": { "type": "string" } },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/actionStep" } },
+        "assertions": { "type": "array", "items": { "$ref": "#/$defs/assertion" } }
+      }
+    }
+  }
+}

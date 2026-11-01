@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "baseUrl": "https://example.com",
+  "scope": {
+    "includePaths": ["/"],
+    "maxPages": 20
+  },
+  "auth": {
+    "loginUrl": null,
+    "usernameSelector": null,
+    "passwordSelector": null,
+    "submitSelector": null
+  }
+}

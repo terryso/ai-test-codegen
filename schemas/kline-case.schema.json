@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kline-case.schema.json",
+  "title": "KlineCase",
+  "description": "One durable, runner-agnostic test case. Written to tests/kline/<id>.kline.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "schemaVersion", "generatedBy", "id", "title", "target", "source", "verifiedBy", "steps"],
+  "properties": {
+    "format": { "const": "kline" },
+    "schemaVersion": { "const": "1.0.0" },
+    "generatedBy": { "const": "ai-test-codegen" },
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "baseUrl"],
+      "properties": {
+        "name": { "type": "string" },
+        "baseUrl": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteriaId", "e2eFile"],
+      "properties": {
+        "criteriaId": { "type": "string" },
+        "e2eFile": { "type": "string" }
+      }
+    },
+    "verifiedBy": { "type": "string" },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "target", "value"],
+        "properties": {
+          "action": {
+            "enum": ["goto", "click", "fill", "assertVisible", "assertText", "assertUrl"]
+          },
+          "target": { "type": "string" },
+          "value": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

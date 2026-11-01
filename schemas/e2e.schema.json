@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e2e.schema.json",
+  "title": "E2EArtifact",
+  "description": "Output of step 3. The Kline step reads this file and the site config. Each test entry carries the scenario so conversion does not parse TypeScript.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "step", "generatedAt", "dryRun", "sourceArtifact", "target", "run", "tests"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "step": { "const": "e2e" },
+    "generatedAt": { "type": "string" },
+    "dryRun": { "type": "boolean" },
+    "sourceArtifact": { "type": "string" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "baseUrl"],
+      "properties": {
+        "name": { "type": "string" },
+        "baseUrl": { "type": "string" }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runner", "status", "attempts", "note"],
+      "properties": {
+        "runner": { "type": "string" },
+        "status": { "enum": ["green", "pending", "failed"] },
+        "attempts": { "type": "integer", "minimum": 0 },
+        "note": { "type": "string" }
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/generatedTest" }
+    }
+  },
+  "$defs": {
+    "actionStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "target", "value"],
+      "properties": {
+        "action": {
+          "enum": ["goto", "click", "fill", "assertVisible", "assertText", "assertUrl"]
+        },
+        "target": { "type": "string" },
+        "value": { "type": ["string", "null"] }
+      }
+    },
+    "generatedTest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "criteriaId", "title", "file", "status", "scenario"],
+      "properties": {
+        "id": { "type": "string" },
+        "criteriaId": { "type": "string" },
+        "title": { "type": "string" },
+        "file": { "type": "string", "description": "Playwright spec path, relative to the repo when it lives inside it." },
+        "status": { "enum": ["passed", "pending", "failed"] },
+        "scenario": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["steps"],
+          "properties": {
+            "steps": { "type": "array", "items": { "$ref": "#/$defs/actionStep" } }
+          }
+        }
+      }
+    }
+  }
+}

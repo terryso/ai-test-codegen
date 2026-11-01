@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+config/site.json
+artifacts/*.json
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/

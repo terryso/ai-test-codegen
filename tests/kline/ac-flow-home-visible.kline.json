@@ -1,0 +1,28 @@
+{
+  "format": "kline",
+  "schemaVersion": "1.0.0",
+  "generatedBy": "ai-test-codegen",
+  "id": "AC-flow-home-visible",
+  "title": "Open example",
+  "target": {
+    "name": "example",
+    "baseUrl": "https://example.com/"
+  },
+  "source": {
+    "criteriaId": "AC-flow-home-visible",
+    "e2eFile": "tests/e2e/ac-flow-home-visible.spec.ts"
+  },
+  "verifiedBy": "dry-run",
+  "steps": [
+    {
+      "action": "goto",
+      "target": "/",
+      "value": null
+    },
+    {
+      "action": "assertVisible",
+      "target": "body",
+      "value": null
+    }
+  ]
+}
