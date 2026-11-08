@@ -4,6 +4,7 @@ export const ARTIFACT_FILES = {
   explore: "explore.json",
   criteria: "criteria.json",
   e2e: "e2e.json",
+  runNl: "run-nl.json",
   kline: "kline.json",
 } as const;
 
@@ -11,6 +12,8 @@ export const DEFAULT_PATHS = {
   artifactsDir: "artifacts",
   e2eDir: "tests/e2e",
   klineDir: "tests/kline",
+  nlDir: "tests/nl",
+  cacheDir: ".e2e/cache",
 } as const;
 
 export const GENERATED_SPEC_MARKER = "@generated pipeline:e2e";

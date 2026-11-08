@@ -5,7 +5,7 @@ const channel = process.env.PLAYWRIGHT_CHANNEL;
 
 export default defineConfig({
   testDir: "tests/e2e",
-  testMatch: "*.spec.ts",
+  testMatch: "**/*.spec.ts",
   fullyParallel: true,
   reporter: "list",
   use: {

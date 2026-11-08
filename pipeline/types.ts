@@ -1,6 +1,6 @@
 export const SCHEMA_VERSION = "1.0.0";
 
-export type StepName = "explore" | "criteria" | "e2e" | "kline";
+export type StepName = "explore" | "criteria" | "e2e" | "run-nl" | "export-pw" | "kline";
 
 export type ActionName =
   | "goto"
@@ -48,6 +48,8 @@ export interface PipelineOptions {
   artifactsDir: string;
   e2eDir: string;
   klineDir: string;
+  nlDir: string;
+  cacheDir: string;
 }
 
 export interface SelectorRecord {
@@ -125,6 +127,8 @@ export interface E2ETestRecord {
   title: string;
   file: string;
   status: "passed" | "pending" | "failed";
+  /** Set on replay-cache exports. The human-maintained NL file. */
+  nlFile?: string;
   scenario: {
     steps: ActionStep[];
   };
@@ -135,6 +139,13 @@ export interface E2EArtifact {
   step: "e2e";
   generatedAt: string;
   dryRun: boolean;
+  /**
+   * `criteria` is the planning placeholder from acceptance criteria.
+   * `replay-cache` is the production export from `.e2e/cache` after a green NL run.
+   */
+  origin?: "criteria" | "replay-cache";
+  /** Replay cache directory used when origin is `replay-cache`. */
+  cacheDir?: string;
   sourceArtifact: string;
   target: TargetRef;
   run: {
@@ -144,6 +155,18 @@ export interface E2EArtifact {
     note: string;
   };
   tests: E2ETestRecord[];
+}
+
+export interface RunNlArtifact {
+  schemaVersion: typeof SCHEMA_VERSION;
+  step: "run-nl";
+  generatedAt: string;
+  dryRun: boolean;
+  status: "green" | "pending" | "failed";
+  runner: string;
+  cacheDir: string;
+  files: string[];
+  note: string;
 }
 
 export interface KlineCase {
